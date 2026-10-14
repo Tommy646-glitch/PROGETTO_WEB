@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Thomas Candido - Gabriele Iannone">
+    <title>Registrazione Account Cliente</title>
+    <link rel="stylesheet" href="CSS/pc/aggiungi_cliente.css">
+    <link rel="stylesheet" href="CSS/pc/body.css">
+    <script src="JS/login_register_control/registrazione.js"></script>
+    <style>
+        .login-link { text-align: center; margin-top: 20px; }
+        .login-link a { color: cadetblue; font-weight: bold; text-decoration: none; }
+    </style>
+</head>
+
+<body class="pagina-con-sfondo">
+    <main>
+        <div class="form-aggiunta-cliente">
+            <h1>Crea il tuo Account</h1>
+            <p><em>I campi contrassegnati con l'asterisco (*) sono obbligatori.</em></p>
+            <form action="/register" method="POST" onsubmit="return validaRegistrazione()" novalidate>
+                <fieldset>
+                    <legend>Dati Società / Fatturazione</legend>
+                    <div class="form-group">
+                        <label for="societa">Nome Società *:</label>
+                        <input type="text" id="societa" name="societa" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Standard *:</label>
+                        <input type="email" id="email" name="email" required>
+                        <span id="email-errore" style="color: #e74c3c; font-size: 12px; margin-top: 5px; display: none;">
+                            Inserisci un indirizzo email valido (es. nome@dominio.it)
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Telefono Società *:</label>
+                        <div class="telefono-wrapper">
+                            <span class="prefisso">+39</span>
+                            <input type="tel" id="telefono" name="telefono" required>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Dati Referente / Proprietario</legend>
+                    <div class="form-group">
+                        <label for="nome">Nome Proprietario *:</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cognome">Cognome Proprietario *:</label>
+                        <input type="text" id="cognome" name="cognome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password *:</label>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="password" id="password" name="password" minlength="8" required style="flex: 1;">
+                            <button type="button" id="mostra-password" title="Mostra/Nascondi password"
+                                style="background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; display: flex;">
+                                <img src="allegati/occhio-chiuso.png" id="icona-password" alt="Mostra password" width="24" height="24">
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <br>
+
+                <div class="form-actions">
+                    <button type="submit">Registrati</button>
+                    <button type="reset">Svuota Campi</button>
+                </div>
+            </form>
+
+            <div class="login-link">
+                <p>Hai già un account? <a href="login.html">Accedi qui</a></p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

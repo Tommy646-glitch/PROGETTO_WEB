@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>Aggiungi Ordine</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Thomas Candido - Gabriele Iannone">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="stylesheet" href="CSS/pc/body.css">
+    <link rel="stylesheet" href="CSS/pc/aggiungi_ordine.css">
+    <link rel="stylesheet" href="CSS/pc/menu_bar.css">
+
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script src="JS/menu_bar.js"></script>
+    <script src="JS/tema.js"></script>
+    <script src="JS/aggiungi_ordine.js" defer></script>
+    <script src="JS/visuale_utente.js"></script>
+    <script>
+        if (localStorage.getItem('isAdmin') === 'true') {
+            document.documentElement.classList.add('is-admin');
+        }
+    </script>
+</head>
+
+<body class="pagina-con-sfondo">
+    <nav>
+        <div class="menu_lt" id="menu_smartphone">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="menu" id="nav_menu">
+            <li class="admin-only"><a href="lista_clienti.html">Clienti</a></li>
+            <li class="admin-only"><a href="aggiungi_cliente.html">Aggiungi Cliente</a></li>
+            <li><a href="aggiungi_ordine.html" class="active">Aggiungi Ordine</a></li>
+            <li><a href="storico_ordini_home.html">Storico Ordine</a></li>
+            
+            <li class="theme-item">
+                <button id="themeBtn" class="theme-button">🎨</button>
+                <ul class="theme-dropdown" id="themeMenu">
+                    <li class="dropdown-header">Tema</li>
+                    <li><label class="theme-option"><input type="radio" name="theme" value="light" onchange="applyTheme('light')"> ☀️ Chiaro</label></li>
+                    <li><label class="theme-option"><input type="radio" name="theme" value="dark" onchange="applyTheme('dark')"> 🌙 Scuro</label></li>
+                </ul>
+            </li>
+            
+            <li class="user-item">
+                <img src="allegati/log.png" class="user-avatar" id="userBtn" alt="login" title="Menu Utente">
+                <ul class="user-dropdown" id="userMenu">
+                    <li class="dropdown-header">Account</li>
+                    <li><a href="aggiungi_cliente.html?edit=true">⚙️ Modifica Profilo</a></li>
+                    <li><hr></li>
+                    <li><a href="/logout" class="logout-link">🚪 Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container_ordini">
+        <h2>Riepilogo Ordine Corrente</h2>
+    
+        <table border="1" class="tabella_stile_lista" id="tabella_riepilogo">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Cliente</th>
+                    <th>Stato</th>
+                    <th>Marchio</th>
+                    <th>Tipologia</th>
+                    <th>Colore</th>
+                    <th>Taglia</th>
+                    <th>Quantità</th>
+                    <th>Prezzo Cl.</th>
+                    <th id="th_prezzo_az" class="admin-only">Prezzo Az.</th>
+                    <th>Note</th>
+                    <th>Anteprima</th> 
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody id="corpo_tabella_ordini"></tbody>
+        </table>
+    
+        <div class="azioni_tabella">
+            <div class="totale_box"><strong>Totale Complessivo: <span id="totale_ordine_display">€0.00</span></strong></div>
+            <button type="button" class="btn_salva" onclick="apriModalPagamento()" title="Procedi al pagamento e salvataggio">PAGA E SALVA 💵</button>
+            <button type="button" class="btn_refresh" onclick="svuotaTabella()" title="Svuota tabella">SVUOTA TABELLA &#128228;</button>
+        </div>
+    </div>
+
+    <div class="riquadro_form">
+        <h3>Inserisci Dettagli Ordine</h3>
+        <form id="form_ordine">
+            <table class="tabella_ordine">
+                <tbody>
+                    <tr>
+                        <td colspan="1">
+                            <input type="text" id="f_cliente" list="lista_clienti_datalist" placeholder="Nome Cliente / Azienda" required>
+                            <datalist id="lista_clienti_datalist"></datalist>
+                            <input type="hidden" id="id_cliente_nascosto">
+                        </td>
+                        <td colspan="1">
+                            <select id="f_stato" class="select-stato" required>
+                                <option value="" selected disabled>Stato Ordine</option>
+                                <option value="Ordinato" class="stato-rosso">🔴 Ordinato</option>
+                                <option value="In Lavorazione" class="stato-giallo">🟡 In Lavorazione</option>
+                                <option value="Evaso" class="stato-verde">🟢 Evaso</option>
+                                <option value="Archiviato" class="stato-grigio">⚪ Archiviato</option>
+                            </select>
+                        </td>
+                        <td colspan="2"><input type="date" id="f_data" required></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="text" id="f_marchio" placeholder="Marchio" required></td>
+                        <td>
+                            <select id="f_tipologia" required>
+                                <option value="" selected disabled>Tipologia</option>
+                                <option value="T-shirt">T-shirt</option>
+                                <option value="Felpa">Felpa</option>
+                                <option value="Pantalone">Pantalone</option>
+                                <option value="Scarpa">Scarpa</option>
+                            </select>
+                        </td>
+                        <td colspan="2">
+                            <div class="colore-taglia-container">
+                            <div class="colore-wrapper">
+                                <label for="f_colore" class="label-colore">Colore:</label>
+                                <input type="color" id="f_colore" title="Colore">
+                            </div>
+                        
+                        
+                            <select id="f_taglia" class="select-taglia-ridotta" required >
+                                <option value="" selected disabled>Taglia</option>
+                                <option value="UNISEX">UNISEX</option>
+                                <optgroup label="Abbigliamento">
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                </optgroup>
+    
+                                <optgroup label="Calzature / Pantaloni">
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                    <option value="48">48</option>
+                                    <option value="49">49</option>
+                                    <option value="50">50</option>
+                                    <option value="51">51</option>
+                                    <option value="52">52</option>
+                                </optgroup>
+                            </select>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="number" id="f_quantita" placeholder="Qtà" min="1" required></td>
+                        <td colspan="1"><input type="number" id="f_prezzo_cl" step="0.01" placeholder="€ Cliente" required></td>
+                        <td colspan="2" class="admin-only"><input type="number" id="f_prezzo_az" step="0.01" placeholder="€ Azienda"></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <textarea id="f_note" class="area-note" placeholder="Dettagli personalizzazione..."></textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">
+                            <!-- bottoni sotto al form-->
+                            <div class="campi_sotto">
+                                <!-- input invisibile x allegare link di immagine su cloudinary-->
+                                <input type="hidden" id="f_image_url">
+                                <!-- nuovo bottone-->
+                                <button type="button" class="bottone_ic" id="btn_apri_configuratore" title="Apri Configuratore 3D">👕</button>
+                                <button type="button" class="bottone_ic" id="upload_widget_opener" title="Allega Foto su Cloudinary">&#128206;</button>
+                                <button type="reset" class="bottone_ic" title="Reset Form">&#x21BB;</button>
+                                <button type="button" class="bottone_ic" onclick="aggiungiRigaTabella()" title="Aggiungi a Riepilogo">🛒</button>
+                            </div>
+
+                             
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+
+    <!-- Metodo di pagamento-->
+     <div id="modalPagamento" class="modal-pay">
+            <div class="modal-pay-content">
+        <div class="n26-header">
+            <img src="allegati/carta.jpg" alt="N26" width="60">
+            <span>Pagamento Protetto</span>
+        </div>
+
+
+        <div class="pay-summary">
+            <p>Importo da autorizzare: <strong id="totale_modal_pay">€0.00</strong></p>
+        </div>
+        
+        <div class="form-pay">
+            <label>Titolare della carta</label>
+            <input type="text" id="card_name" placeholder="Nome e Cognome">
+            
+            <label>Numero della carta (PAN)</label>
+            <input type="text" id="card_number" maxlength="19" placeholder="0000 0000 0000 0000">
+            
+            <div class="pay-row">
+                <div class="pay-col">
+                    <label>Scadenza</label>
+                    <input type="text" id="card_expiry" maxlength="5" placeholder="MM/AA">
+                </div>
+                <div class="pay-col">
+                    <label>CVV</label>
+                    <input type="text" id="card_cvv" maxlength="3" placeholder="123">
+                </div>
+            </div>
+            
+            <p id="pay-error" style="color: #e74c3c; font-size: 12px; display: none;">⚠️ Dati carta non validi</p>
+            
+            <div class="pay-actions">
+                <button type="button" class="btn-cancel" onclick="chiudiPagamento()">Annulla</button>
+                <button type="button" class="btn-confirm" onclick="processaPagamento()">Acquista Ora</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- configuratore-->
+     <div id="modalConfiguratore" class="modal-pay" style="display:none; z-index: 9999; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center;">
+        <div class="modal-pay-content" style="width: 95%; max-width: 1200px; height: 95vh; padding: 0; background: white; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: cadetblue; color: white;">
+                <h2 style="margin: 0; font-size: 20px;">🎨 Personalizza Capo</h2>
+                <button type="button" onclick="chiudiConfiguratore()" style="background: white; color: cadetblue; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">X Chiudi</button>
+            </div>
+            
+            <iframe id="iframeConfiguratore" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+            
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+/* REGOLE CSS X LOGIN*/
+html
+{
+    overflow: hidden;
+}
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    
+    /* GESTIONE SFONDO */
+    background-image: url('../../allegati/SFONDO_LOGIN.png'); 
+    background-size: cover; /* L'immagine copre tutto lo spazio disponibile */
+    background-position: center; /* L'immagine viene centrata */
+    background-repeat: no-repeat; /* Evita che l'immagine si duplichi */
+    background-attachment: fixed; /* Lo sfondo non scorre con la pagina */
+}
+
+.login_cnt {
+    background-color: rgba(255, 255, 255, 0.95); 
+    padding: 40px;
+    border-radius: 20px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+    width: 100%;
+    max-width: 380px;
+    box-sizing: border-box; 
+    backdrop-filter: blur(5px);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-login {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Se il logo è quadrato, lo fa diventare tondo */
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Piccola ombra sotto il logo */
+}
+
+.login-header h2 {
+    color: #34495e; /* Il blu scuro che riprende il colore della navbar */
+    margin: 10px 0 5px 0;
+    font-size: 24px;
+}
+
+.login-header p {
+    margin-bottom: 10px;
+    color: black; 
+    font-size: 14px;
+    margin: 0;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block; /* Fa andare l'input a capo sotto la label */
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da; /* Bordo grigio chiaro */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    transition: border-color 0.3s; /* Animazione fluida al click */
+}
+
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background-color: #34495e; /* Riprende il blu scuro*/
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 10px;
+}
+
+
+.btn-login:hover {
+    background-color: grey; /* Si schiarisce un pochino */
+}
+
+
+
+.login-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 13px;
+}
+
+.login-footer a {
+    color: cadetblue;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-footer a:hover {
+    text-decoration: underline; /* Si sottolinea al passaggio del mouse */
+}

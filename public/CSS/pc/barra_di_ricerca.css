@@ -1,0 +1,116 @@
+/*---------BARRA DI RICERCA + FILTRO -----------*/
+.ricerca-completa {
+    width: 100%;
+    max-width: 650px; 
+    margin: 0 auto 20px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.ricerca {
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    gap: 10px; 
+    flex-wrap: wrap;
+}
+
+.ricerca input {
+    flex-grow: 1;
+    padding: 5px 15px;
+    border: 1px solid grey;
+    border-radius: 15px;
+    height: 50px; 
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Stile comune per i bottoni */
+.ricerca button, .btn-filter {
+    background-color: cadetblue;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    height: 50px; 
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ricerca button:hover, .btn-filter:hover {
+    background-color: grey;
+}
+
+/* TENDINA x filtri*/
+.filter-dropdown-container {
+    position: relative;
+    display: flex;
+}
+
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: white;
+    border: 1px solid cadetblue;
+    border-radius: 12px;
+    padding: 15px;
+    z-index: 3000;
+    min-width: 220px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.filter-dropdown.show { display: block; }
+
+/* FIX DIMENSIONI INPUT TENDINA */
+.filter-option {
+    display: flex !important;
+    flex-direction: row !important; 
+    align-items: center !important; 
+    justify-content: flex-start !important; 
+    gap: 15px !important;   
+    width: 100% !important;
+    padding: 8px 5px !important;
+    cursor: pointer;
+}
+
+/*Rimpicciolisce gli input (Radio e Checkbox) */
+.filter-option input[type="radio"], 
+.filter-option input[type="checkbox"] {
+    all: revert !important;
+    width: 18px !important;  
+    height: 18px !important;  
+    margin: 0 !important;     
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: cadetblue;  
+}
+
+/* Sistemazione del testo e delle emoji */
+.filter-option span, 
+.filter-option label {
+    display: flex !important;
+    align-items: center !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important; 
+}
+.filter-title {
+    margin-top: 15px !important;
+    margin-bottom: 5px !important;
+    text-align: left !important;
+}
+
+.btn-apply {
+    width: 100% !important;
+    height: 35px !important;
+    margin-top: 10px;
+    background-color: #2c3e50 !important;
+    border-radius: 8px !important;
+}

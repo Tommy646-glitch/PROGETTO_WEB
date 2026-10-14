@@ -1,0 +1,494 @@
+
+/* 1. CONTENITORE RIEPILOGO (TABELLA) */
+.container_ordini {
+    width: 1400px;
+    margin: 30px auto;       /* Centrato nella pagina */
+    background-color: lightblue; /* Trasparenza 40% */
+    border-radius: 15px;
+    overflow-y: auto;        /* Scroll verticale interno */
+    overflow-x: auto;        /* Scroll orizzontale se necessario */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.container_ordini h2 {
+    position: sticky;
+    top: 0;
+    margin: 0;
+    padding: 15px;
+    background-color: cadetblue; /* Cadetblue trasparente */
+    color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* 2. STILE TABELLA RIEPILOGO */
+.tabella_stile_lista {
+    width: 100%;
+    table-layout: fixed;     /* equita larghezza per qualsiasi contenuto */
+    border-collapse: collapse;
+}
+
+.tabella_stile_lista thead th {
+    position: sticky;
+    top: 20px;               /* Sotto l'H2 */
+    z-index: 100;
+    background-color: rgba(240, 240, 240, 0.9); /* Quasi coprente per leggere bene */
+    color: #333;
+    padding: 8px;
+    border-bottom: 2px solid cadetblue;
+    font-family: Arial, sans-serif;
+}
+
+/* Celle del corpo (TD) */
+.tabella_stile_lista td {
+    padding: 5px 10px;      /* Altezza ridotta come chiesto */
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Puntini di sospensione se lungo */
+    white-space: nowrap;
+    color: #333;
+    background-color: rgb(243, 239, 239);
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+/* Larghezza specifica per la DATA */
+.tabella_stile_lista td:first-child, 
+.tabella_stile_lista th:first-child {
+    width: 110px;
+    min-width: 110px;
+    font-weight: bold;
+    overflow: visible;
+}
+
+.azioni_tabella{
+    padding: 10px;
+    text-align: center;
+}
+
+.azioni_tabella button
+{
+    font-weight: bold;
+    font-family: Arial,sans-serif;
+    border-radius: 10px;
+    background-color: cadetblue;
+    color:white;
+    cursor:pointer;
+}
+
+/* 3. RIQUADRO FORM INSERIMENTO */
+.riquadro_form {
+    background-color: rgba(244, 244, 244, 0.8); /* Grigio trasparente */
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    width: 700px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.riquadro_form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Input e Select nel Form */
+.tabella_ordine {
+    width: 100%;
+    border-spacing: 8px;
+}
+
+.tabella_ordine input, 
+.tabella_ordine select {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* */
+}
+
+/* 4. NOTE E AZIONI */
+.area-note {
+    width: 100%;
+    height: 60px;
+    resize: none;            /* */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.campi_sotto {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Bottoni icone (Reset, Allega, Aggiungi) */
+.bottone_ic {
+    padding: 14px 28px; /* Più alti e più larghi */
+    font-size: 16px; /* Testo più grande e leggibile */
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: white; /* Testo bianco che risalta */
+    background-color: rgb(111, 185, 188); /* Il colore principale del tuo tema */
+    border: none; /* Rimuoviamo il bordino standard */
+    border-radius: 8px; /* Angoli leggermente arrotondati e moderni */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombra morbida per effetto 3D */
+    transition: all 0.3s ease; /* Transizione fluida */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Effetto Hover (quando passi sopra col mouse) */
+.bottone_ic:hover {
+    background-color: #4f8587; /* Un cadetblue leggermente più scuro */
+    transform: translateY(-3px); /* Effetto sollevamento: il bottone viene verso l'utente */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* L'ombra si espande */
+}
+
+/* Effetto Active (quando fai click fisicamente sul bottone) */
+.bottone_ic:active {
+    transform: translateY(1px); /* Il bottone si "schiaccia" verso il basso */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* L'ombra si accorcia */
+}
+
+/* Anteprima immagine in tabella */
+.tabella_stile_lista img {
+    height: 30px;           /* */
+    border-radius: 4px;
+    cursor: zoom-in;
+}
+
+
+/* fix del bottone color nella tabella*/
+/* 1. Il nostro cerchio spostato a sinistra */
+.tabella_ordine input[type="color"] {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    
+    /* MODIFICA: lo spostiamo a sinistra e togliamo il centraggio */
+    display: inline-block;
+    margin: 0; 
+}
+
+/* 2. LA MAGIA: Diciamo al browser di espandere il colore fino ai bordi */
+.tabella_ordine input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0; /* Togliamo lo spazio vuoto interno */
+}
+
+.tabella_ordine input[type="color"]::-webkit-color-swatch {
+    border: none; /* Togliamo il bordino nero nativo */
+}
+
+/* 3. Effetto Hover */
+.tabella_ordine input[type="color"]:hover {
+    border-color: cadetblue;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+
+.colore-taglia-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 25px; /* Distanza precisa tra il pallino del colore e il menu taglia */
+}
+
+/* Allineamento tra scritta e pallino */
+.colore-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Distanza tra "Colore:" e il pallino */
+}
+
+/* Fissaggio dell'etichetta colore*/
+.label-colore {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    color: #666;
+    font-weight: bold;
+    margin: 0; 
+    line-height: 1; /* Impedisce al testo di avere spazi invisibili sopra o sotto */
+}
+
+
+.select-taglia-ridotta {
+    width: 120px !important;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* stili x il metodo di pagamento */
+
+.modal-pay {
+    display: none; /* Verrà cambiato in 'flex' via JS */
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    
+    /* centraggio del mdal di pagamento*/
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-pay-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 20px;
+    
+    /* GRANDEZZA CONTENUTA */
+    width: 380px; 
+    max-width: 90%; /* Per non uscire dai bordi su smartphone */
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    box-sizing: border-box; /* Evita che il padding allarghi il div */
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    
+    /* Gestione altezza per schermi piccoli */
+    max-height: 95vh;
+    overflow-y: auto;
+}
+
+/* Header del Modal (Logo + Testo) n26 riprende il nome di una banca fittizia */
+.n26-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+
+/* Campi del Form Pagamento */
+.form-pay label {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.form-pay input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+/* Riga Scadenza + CVV */
+.pay-row {
+    display: flex;
+    gap: 15px;
+}
+
+.pay-col {
+    flex: 1;
+}
+
+/* Bottoni Azione */
+.pay-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-confirm {
+    flex: 2;
+    background: #36a39d;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-confirm:hover {
+    background: #2d8681;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: #f0f0f0;
+    color: #666;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.totale_box {
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    text-align: right; /* Lo spinge a destra come volevi */
+}
+
+#totale_ordine_display {
+    color: #27ae60; /* Verde per il prezzo */
+    font-size: 1.4rem;
+}
+
+.pay-summary {
+    text-align: center;
+    background: #eef2f3;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+/* --- MEDIA QUERY PER SMARTPHONE--- */
+@media screen and (max-width: 768px) {
+
+    /* 1. IL FORM */
+    .riquadro_form {
+        width: 95%;
+        margin: 10px auto;
+        padding: 15px;
+        background-color: #ffffff;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .riquadro_form h3 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    /* compattazione degli input */
+    .tabella_ordine td {
+        display: block;
+        width: 100%;
+        padding: 2px 0;
+    }
+
+    .tabella_ordine input, 
+    .tabella_ordine select {
+        height: 35px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    /*switch da tab a scheda*/
+    .container_ordini {
+        display: block !important;
+        width: 95%;
+        margin: 10px auto;
+        background-color: transparent; /* Sfondo trasparente per far risaltare le schede */
+        overflow-x: hidden; /* Niente scroll orizzontale */
+    }
+    .tabella_stile_lista thead {
+        display: none;
+    }
+
+    .tabella_stile_lista, 
+    .tabella_stile_lista tbody {
+        display: block;
+        width: 100%;
+    }
+
+    /* TRASFORMAZIONE DELLA RIGA (TR) IN UNA SCHEDA ELETGANTE (CARD) */
+    .tabella_stile_lista tr {
+        display: flex;
+        flex-direction: column; /* Impila i dati dall'alto verso il basso */
+        background-color: white;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        padding: 15px;
+        border: 1px solid #eaeaea;
+        position: relative; /* Serve per posizionare i bottoni assoluti */
+    }
+
+    /* Stile dei singoli dati dentro la scheda */
+    .tabella_stile_lista td {
+        display: flex;
+        justify-content: space-between; /* Mette il dato a destra */
+        align-items: center;
+        text-align: right;
+        padding: 6px 0;
+        border-bottom: 1px solid #f0f0f0;
+        background-color: transparent;
+        font-size: 14px;
+        white-space: normal; /* Permette di andare a capo */
+    }
+
+    .tabella_stile_lista td:first-child{
+        width: 100% !important;
+    }
+    /* Togliamo la riga all'ultimo elemento */
+    .tabella_stile_lista td:last-child {
+        border-bottom: none;
+    }
+
+    /* etichette x descrzione campo*/
+    .tabella_stile_lista td::before {
+        content: attr(data-label); /* Prenderà il nome dal HTML */
+        font-weight: bold;
+        color: cadetblue;
+        text-align: left;
+        width: 40%;
+    }
+
+    /* riposizionamento immagine e azioni*/
+    .tabella_stile_lista td img {
+        height: 40px;
+        width: auto;
+        border-radius: 5px;
+    }
+
+    /* I bottoni Modifica/Elimina*/
+    .azioni_tabella {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding-top: 10px;
+        border-bottom: none !important;
+    }
+
+    .azioni_tabella button {
+        flex: 1;
+        padding: 10px;
+        font-size: 18px;
+    }
+}
